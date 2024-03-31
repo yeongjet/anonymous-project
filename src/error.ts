@@ -1,0 +1,1 @@
+export const UnexpectedComment = Error('unexpected end of comment')

@@ -1,0 +1,44 @@
+下面是一个例子`eq {
+    func{
+        x
+    },
+    times{
+        frac{
+            1,
+            sqrt{
+                times{
+                    2,
+                    pi,
+                    sigma
+                }
+            }
+        },
+        power {
+            e,
+            minus{
+                times{
+                    frac{
+                        1,
+                        times{
+                            2,
+                            power {
+                                sigma,
+                                2
+                            }
+                        }
+                    },
+                    power {
+                        sub{
+                            x,
+                            u
+                        },
+                        2
+                    }
+                }
+            }
+        }
+    }
+}
+`怎么样，是不是很简单，再来看一个复杂的`eq{
+
+}`
