@@ -3,16 +3,17 @@ import path from "path"
 import { UnexpectedComment } from './error'
 import { ParseState, letters, LowercaseGreekLetter, UppercaseGreekLetter } from "./definition"
 
-const state: ParseState = { lineNumber: 1 }
 const p = [...Object.values(LowercaseGreekLetter), ...Object.values(UppercaseGreekLetter)]
 console.log(p)
-const parser = (source: string, state: ParseState) => {
+
+let lnum = 1
+const getToken = (source: string,) => {
     let p = 0
     const t = source
     const c = t[p]
-    const s = {
-        lnum: state.lineNumber
-    }
+    // const s = {
+    //     lnum: state.lineNumber
+    // }
     if (letters.includes(c)) {
         while(true){
             p++
@@ -20,7 +21,7 @@ const parser = (source: string, state: ParseState) => {
     }
     switch (c) {
         case 'f':
-            s.lnum++
+            lnum++
             p++
         case '/':
             if (t[p + 1] === '*') {
@@ -39,4 +40,7 @@ const parser = (source: string, state: ParseState) => {
                 }
             }
     }
+}
+const parser = (source: string) => {
+   
 };

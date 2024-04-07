@@ -1,4 +1,13 @@
 unipaper
-
+betternote
+betternotes
+better-note
+*better-notes
+betterpaper
+betterpapers
+better-paper
+better-papers
+goodpapers
+good-papers
 问题
 改用点乘
