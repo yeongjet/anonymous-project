@@ -7,54 +7,62 @@ const keywords = Object.values(Keyword)
 
 let row = 1, col = 1
 let p = 0
-let isKeywordParsing = false
+let nextTokens: Token[] = []
+
+const wrapToken = (type: TokenType, value: string, _col: number = col): Token => {
+    return { row, col: _col, type, value}
+}
 
 const getToken = (source: string): Token => {
     const s = source
     while(true){
+        if (nextTokens.length > 0) {
+            return nextTokens.shift()!
+        }
         const c = s[p]
         if (literalChars.includes(c)) {
-            if (isKeywordParsing) {
-                let k = ''
-                const v = col
-                while(s[p] !== ']') {
-                    k += s[p]
-                    p++
-                    col++
-                    if(s[p] === undefined) {
-                        throw MissingSquareBracketClosing
-                    }
-                }
-                isKeywordParsing = false
-                if ((keywords as string[]).includes(k)) {
-                    return { row, column: v, type: TokenType.Keyword, value: k }
-                } else {
-                    throw UnknownKeyword
-                }
-            }
-            const token = { row, column: col, type: TokenType.Literal, value: c }
+            const token = wrapToken(TokenType.Literal, c)
             p++
             col++
             return token
         }
-        if (delimiters.includes(c)) {
-            if (c === '[') {
-                isKeywordParsing = true
-            }
-            const token = { row, column: col, type: TokenType.Delimiter, value: c }
+        if (["_", "{", "}"].includes(c)) {
+            const token = wrapToken(TokenType.Delimiter, c)
             p++
             col++
             return token
         }
         if (c==='\\') {
             if (escapeChars.includes(s[p+1])) {
-                const token = { row, column: col, type: TokenType.Literal, value: s[p+1] }
+                const token = wrapToken(TokenType.Literal, s[p+1])
                 p+=2
                 col+=2
                 return token
             } else {
                 throw UnknownEscapeChar
             }
+        }
+        if (c === '[') {
+            let k = ''
+            const v1 = col
+            p++
+            col++
+            const v2 = col
+            while(s[p] !== ']') {
+                k += s[p]
+                p++
+                col++
+                if(s[p] === undefined) {
+                    throw MissingSquareBracketClosing
+                }
+            }
+            console.log(k)
+            if (keywords.includes(k as Keyword)) {
+                nextTokens.push(wrapToken(TokenType.Keyword, k, v2), wrapToken(TokenType.Delimiter, s[p]))
+            } else {
+                throw UnknownKeyword
+            }
+            return wrapToken(TokenType.Delimiter, c, v1)
         }
         if (c === '\n') {
             row++

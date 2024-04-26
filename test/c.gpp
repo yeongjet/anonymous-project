@@ -1,3 +1,6 @@
+a=11
+h=18
+1234567890abcdefghijklmnop
 p,p',p_{1},[ldots]
 p,p{[prime]},p_{1},[ldots]
 a[mid]b
@@ -11,7 +14,6 @@ a,b,[ldots],c
 \[a,b\]
 a[leqslant]x[leqslant]b
 \[a,b,[ldots],c\]
-a[equiv]b([mod]{q})
 a[equiv]b(mod q)
 a[equiv]b(q)
 \[x\]

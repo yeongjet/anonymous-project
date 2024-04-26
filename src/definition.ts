@@ -6,11 +6,12 @@ export enum TokenType {
 
 export interface Token {
   row: number
-  column: number
+  col: number
   type: TokenType
   value: string
 }
 
+// ref: <<The Comprehensive LATEX Symbol List>>
 export enum Keyword {
   frac = "frac",
   sqrt = "sqrt",
@@ -145,7 +146,6 @@ export enum Keyword {
   nearrow = 'nearrow',
   neq = 'neq',
   ni = 'ni',
-  notin = 'notin',
   not = 'not',
   nwarrow = 'nwarrow',
   odot = 'odot',
@@ -213,9 +213,79 @@ export enum Keyword {
   bigcap = 'bigcap',
   bigcup = 'bigcup',
   bigcirc = 'bigcirc',
-  // AMS symbols
+  //Mathematical symbols-Table 114: stix Negated Binary Relations
+  forks = 'forks',
+  nhpar = 'nhpar',
+  nsime = 'nsime',
+  napprox = 'napprox',
   nmid = 'nmid',
-  // greek
+  nsucc = 'nsucc',
+  napproxeqq = 'napproxeqq',
+  nni = 'nni',
+  nsucccurlyeq = 'nsucccurlyeq',
+  nasymp = 'nasymp',
+  notin = 'notin',
+  nsucceq = 'nsucceq',
+  nBumpeq = 'nBumpeq',
+  nparallel = 'nparallel',
+  nvarisinobar = 'nvarisinobar',
+  nbumpeq = 'nbumpeq',
+  nprec = 'nprec',
+  nvarniobar = 'nvarniobar',
+  ncong = 'ncong',
+  npreccurlyeq = 'npreccurlyeq',
+  nvDash = 'nvDash',
+  ncongdot = 'ncongdot',
+  npreceq = 'npreceq',
+  nvdash = 'nvdash',
+  ne = 'ne',
+  nshortmid = 'nshortmid',
+  nVDash = 'nVDash',
+  neqsim = 'neqsim',
+  nshortparallel = 'nshortparallel',
+  nVdash = 'nVdash',
+  nequiv = 'nequiv',
+  nsim = 'nsim',
+  //Mathematical symbols-Table 137: AMS Inequalities
+  eqslantgtr = 'eqslantgtr',
+  gtrdot = 'gtrdot',
+  lesseqgtr = 'lesseqgtr',
+  ngeq = 'ngeq',
+  eqslantless = 'eqslantless',
+  gtreqless = 'gtreqless',
+  lesseqqgtr = 'lesseqqgtr',
+  ngeqq = 'ngeqq',
+  geqq = 'geqq',
+  gtreqqless = 'gtreqqless',
+  lessgtr = 'lessgtr',
+  ngeqslant = 'ngeqslant',
+  geqslant = 'geqslant',
+  gtrless = 'gtrless',
+  lesssim = 'lesssim',
+  ngtr = 'ngtr',
+  ggg = 'ggg',
+  gtrsim = 'gtrsim',
+  lll = 'lll',
+  nleq = 'nleq',
+  gnapprox = 'gnapprox',
+  gvertneqq = 'gvertneqq',
+  lnapprox = 'lnapprox',
+  nleqq = 'nleqq',
+  gneq = 'gneq',
+  leqq = 'leqq',
+  lneq = 'lneq',
+  nleqslant = 'nleqslant',
+  gneqq = 'gneqq',
+  leqslant = 'leqslant',
+  lneqq = 'lneqq',
+  nless = 'nless',
+  gnsim = 'gnsim',
+  lessapprox = 'lessapprox',
+  lnsim = 'lnsim',
+  gtrapprox = 'gtrapprox',
+  lessdot = 'lessdot',
+  lvertneqq = 'lvertneqq',
+  //Mathematical symbols-Table 208: Greek Letters
   alpha = 'alpha',
   beta = 'beta',
   gamma = 'gamma',
@@ -262,7 +332,9 @@ export const escapeChars = [
   "[", "]", "_", "{", "}", "\\"
 ]
 
-export const delimiters = escapeChars
+export const delimiters = [
+  "[", "]", "_", "{", "}"
+]
 
 //Exclude: [ \ ] _ { }
 export const literalChars = [
