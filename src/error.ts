@@ -1,1 +1,3 @@
-export const UnexpectedComment = Error('unexpected end of comment')
+export const UnknownEscapeChar = Error('unknown escape char')
+export const UnknownKeyword = Error('unknown keyword')
+export const MissingSquareBracketClosing = Error('missing square bracket closing')

@@ -17,7 +17,7 @@ a[equiv]b(q)
 \[x\]
 \{x\}
 [vert]x[vert]
-[dvert]x[dvert]
+[Vert]x[Vert]
 [sum]{}{n[leqslant]x}
 [sum]_{n[leqslant]x}
 [int]{}{(a)}
