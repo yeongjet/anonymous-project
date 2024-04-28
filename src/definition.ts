@@ -1,7 +1,8 @@
 export enum TokenType {
   Literal,
   Delimiter,
-  Keyword
+  Keyword,
+  EndOfFile
 }
 
 export interface Token {
@@ -329,7 +330,7 @@ export enum Keyword {
 }
 
 export const escapeChars = [
-  "[", "]", "_", "{", "}", "\\"
+  "_", "{", "}", "[", "]", "\\"
 ]
 
 export const delimiters = [

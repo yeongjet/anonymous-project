@@ -13,17 +13,18 @@
     "husky": "^9.0.11",
     "lint-staged": "^15.2.2",
     "prettier": "^3.2.5",
+    "ts-node": "^10.9.2",
     "typescript": "^5.4.3"
   },
-    "husky": {
-      "hooks": {
-          "pre-commit": "lint-staged"
-      }
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
   },
   "lint-staged": {
-      "**/*.{js,ts,json}": [
-          "eslint ./src --fix",
-          "prettier --write ./src"
-      ]
+    "**/*.{js,ts,json}": [
+      "eslint ./src --fix",
+      "prettier --write ./src"
+    ]
   }
 }

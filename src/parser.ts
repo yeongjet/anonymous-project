@@ -5,71 +5,44 @@ import { literalChars, escapeChars, Token, TokenType, delimiters, Keyword } from
 
 const keywords = Object.values(Keyword)
 
+let token: string | null = null
 let row = 1, col = 1
-let p = 0
-let nextTokens: Token[] = []
-
-const wrapToken = (type: TokenType, value: string, _col: number = col): Token => {
-    return { row, col: _col, type, value}
-}
-
-const getToken = (source: string): Token => {
+let p = -1
+let isKeywordParsing = false
+let lastToken: string | null = null
+const getToken = (source: string) => {
     const s = source
-    while(true){
-        if (nextTokens.length > 0) {
-            return nextTokens.shift()!
-        }
+    while(true) {
+        col+=token?.length ?? 0
+        p++
         const c = s[p]
-        if (literalChars.includes(c)) {
-            const token = wrapToken(TokenType.Literal, c)
-            p++
-            col++
-            return token
-        }
-        if (["_", "{", "}"].includes(c)) {
-            const token = wrapToken(TokenType.Delimiter, c)
-            p++
-            col++
-            return token
-        }
-        if (c==='\\') {
-            if (escapeChars.includes(s[p+1])) {
-                const token = wrapToken(TokenType.Literal, s[p+1])
-                p+=2
-                col+=2
-                return token
-            } else {
-                throw UnknownEscapeChar
-            }
-        }
-        if (c === '[') {
+        if (isKeywordParsing) {
             let k = ''
-            const v1 = col
-            p++
-            col++
-            const v2 = col
-            while(s[p] !== ']') {
+            while (s[p] && s[p] !== ']') {
                 k += s[p]
                 p++
-                col++
-                if(s[p] === undefined) {
-                    throw MissingSquareBracketClosing
-                }
             }
-            console.log(k)
-            if (keywords.includes(k as Keyword)) {
-                nextTokens.push(wrapToken(TokenType.Keyword, k, v2), wrapToken(TokenType.Delimiter, s[p]))
-            } else {
-                throw UnknownKeyword
+            lastToken = token
+            token = k
+            isKeywordParsing = false
+            p--
+            break
+        } else if ([...literalChars, '_', '{', '}', '[', ']', '\\'].includes(c)) {
+            lastToken = token
+            token = c
+            if (c === '[' && lastToken !== '\\') {
+                isKeywordParsing = true
             }
-            return wrapToken(TokenType.Delimiter, c, v1)
+            break
         }
         if (c === '\n') {
             row++
-            col = 0
+            col = 1
         }
-        col++
-        p++
+        token = null
+        if (c === undefined) {
+            break
+        }
     }
 }
 /**
@@ -94,10 +67,27 @@ const getToken = (source: string): Token => {
  * <A3> ::= [<K>]
  * <K> ::= "alpha" | "beta" | "ldots" ...
  */
-export const parser = (text: string) => {
-    while(true) {
-        const token = getToken(text)
-        console.log(token)
-    }
 
+const A1 = () => {
+    if (token && ['[', ']', '_', '{', '}', '\\'].includes(token)) {
+
+    } else {
+        throw UnknownEscapeChar
+    }
+}
+const U = () => {
+    if (token === '\\') {
+        A1()
+    }
+}
+export const parser = (text: string) => {
+    getToken(text)
+    console.log({token, col, row})
+    
+    while (token) {
+        //U()
+        getToken(text)
+        console.log({token, col, row})
+    }
+    console.log('end')
 };
