@@ -8,31 +8,26 @@ const keywords = Object.values(Keyword)
 let token: string | null = null
 let row = 1, col = 1
 let p = -1
-let isKeywordParsing = false
-let lastToken: string | null = null
+let ltkn: string | null = null
 const getToken = (source: string) => {
     const s = source
     while(true) {
         col+=token?.length ?? 0
         p++
         const c = s[p]
-        if (isKeywordParsing) {
+        if (ltkn !== '\\' && token === '[') {
             let k = ''
             while (s[p] && s[p] !== ']') {
                 k += s[p]
                 p++
             }
-            lastToken = token
+            ltkn = token
             token = k
-            isKeywordParsing = false
             p--
             break
         } else if ([...literalChars, '_', '{', '}', '[', ']', '\\'].includes(c)) {
-            lastToken = token
+            ltkn = token
             token = c
-            if (c === '[' && lastToken !== '\\') {
-                isKeywordParsing = true
-            }
             break
         }
         if (c === '\n') {
@@ -81,11 +76,9 @@ const U = () => {
     }
 }
 export const parser = (text: string) => {
-    getToken(text)
-    console.log({token, col, row})
-    
+    getToken(text)    
     while (token) {
-        //U()
+        U()
         getToken(text)
         console.log({token, col, row})
     }
